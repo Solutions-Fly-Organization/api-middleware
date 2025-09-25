@@ -5,15 +5,11 @@ const { Server } = require('socket.io')
 const { initializeSocket } = require('./src/config/socket')
 
 const PORT = process.env.PORT || 3000
-
-// Criar servidor HTTP
 const server = createServer(app)
 
-// Configurar Socket.IO
 const io = new Server(server, {
   cors: {
-    origin: process.env.FRONTEND_URL || "*",
-    methods: ["GET", "POST"]
+    origin: "*",
   }
 })
 

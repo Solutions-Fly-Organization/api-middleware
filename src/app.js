@@ -19,17 +19,15 @@ app.post('/webhook', async (req, res) => {
         // Se for uma nova mensagem recebida, notificar via WebSocket
         const io = app.get('io')
         if (io && req.body.event === 'message' && req.body.payload) {
-            const { session, chatId, from, body, timestamp, id } = req.body.payload
-            
             // Notificar clientes conectados sobre nova mensagem
-            const roomId = `${session}-${chatId}`
+            const roomId = `${req.body.session}-${req.body.payload.from}`
             io.to(roomId).emit('new-message', {
-                id,
-                sessionId: session,
-                chatId,
-                from,
-                text: body,
-                timestamp,
+                id: req.body.payload.id,
+                sessionId: req.body.session,
+                chatId: req.body.payload.chatId,
+                from: req.body.payload.from,
+                text: req.body.payload.body,
+                timestamp: req.body.payload.timestamp,
                 direction: 'inbound',
                 type: 'text'
             })
