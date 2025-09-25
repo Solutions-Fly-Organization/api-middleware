@@ -1,7 +1,7 @@
 require('dotenv').config()
 const axios = require('axios')
 const express = require('express')
-const { apiClient, apiUtils } = require('./config/axios')
+const { apiUtils } = require('./config/axios')
 const app = express()
 
 app.use(express.json())
